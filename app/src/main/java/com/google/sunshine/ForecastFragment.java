@@ -1,10 +1,15 @@
 package com.google.sunshine;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+=======
+import android.net.Uri;
+import android.os.AsyncTask;
+>>>>>>> master
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -40,6 +45,10 @@ import java.util.ArrayList;
 public class ForecastFragment extends Fragment {
 
     private final String LOG_TAG = "ForecastFragment";
+<<<<<<< HEAD
+=======
+    protected ArrayList<String> listWeather = new ArrayList<>();
+>>>>>>> master
     private ArrayAdapter<String> arrayAdapter;
 
     public ForecastFragment() {
@@ -52,17 +61,21 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+<<<<<<< HEAD
     public void onStart() {
         super.onStart();
         updateWeather();
     }
 
     @Override
+=======
+>>>>>>> master
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+<<<<<<< HEAD
         arrayAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.list_item_forecast, R.id.list_item_forecast_textView, new ArrayList<String>());
 
@@ -76,6 +89,21 @@ public class ForecastFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
                         .putExtra(Intent.EXTRA_TEXT, text);
                 startActivity(intent);
+=======
+        listWeather.add("Mon1 sunny +18");
+        listWeather.add("Mon2 sunny +18");
+        listWeather.add("Mon3 sunny +18");
+        listWeather.add("Mon4 sunny +18");
+
+        arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.list_item_forecast, R.id.list_item_forecast_textView, listWeather);
+        ListView listView = (ListView) view.findViewById(R.id.listViewForecast);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String text = arrayAdapter.getItem(position);
+>>>>>>> master
                 Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
             }
         });
@@ -92,15 +120,22 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+<<<<<<< HEAD
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 updateWeather();
+=======
+        switch(item.getItemId()){
+            case R.id.action_refresh:
+                new FetchWeatherTask().execute("94043");
+>>>>>>> master
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+<<<<<<< HEAD
     private void updateWeather() {
         FetchWeatherTask weatherTask = new FetchWeatherTask();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -108,10 +143,13 @@ public class ForecastFragment extends Fragment {
                 getString(R.string.pref_location_default));
         weatherTask.execute(location);
     }
+=======
+>>>>>>> master
 
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
+<<<<<<< HEAD
         private String getReadableDateString(long time) {
             SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
             return shortenedDateFormat.format(time);
@@ -126,6 +164,14 @@ public class ForecastFragment extends Fragment {
                 low = (low * 1.8) + 32;
             }
 
+=======
+        private String getReadableDateString(long time){
+            SimpleDateFormat    shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
+            return shortenedDateFormat.format(time);
+        }
+
+        private String formatHighLows(double high, double low){
+>>>>>>> master
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
@@ -143,9 +189,12 @@ public class ForecastFragment extends Fragment {
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
+<<<<<<< HEAD
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String unitType = preferences.getString(getString(R.string.pref_units_key),getString(R.string.pref_units_metric));
 
+=======
+>>>>>>> master
             Time dayTime = new Time();
             dayTime.setToNow();
 
@@ -153,7 +202,11 @@ public class ForecastFragment extends Fragment {
             dayTime = new Time();
 
             String[] resultStrs = new String[numDays];
+<<<<<<< HEAD
             for (int i = 0; i < weatherArray.length(); i++) {
+=======
+            for (int i = 0; i < weatherArray.length(); i++){
+>>>>>>> master
                 String day;
                 String description;
                 String highAndLow;
@@ -172,7 +225,11 @@ public class ForecastFragment extends Fragment {
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
 
+<<<<<<< HEAD
                 highAndLow = formatHighLows(high, low, unitType);
+=======
+                highAndLow = formatHighLows(high, low);
+>>>>>>> master
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
@@ -254,7 +311,11 @@ public class ForecastFragment extends Fragment {
                 // If the code didn't successfully get the weather data, there's no point in attempting
                 // to parse it.
                 forecastJsonStr = null;
+<<<<<<< HEAD
             } finally {
+=======
+            } finally{
+>>>>>>> master
                 if (urlConnection != null) {
                     urlConnection.disconnect();
                 }
@@ -279,9 +340,15 @@ public class ForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String[] result) {
+<<<<<<< HEAD
             if (result != null) {
                 arrayAdapter.clear();
                 for (String dayForecastStr : result) {
+=======
+            if(result != null){
+                arrayAdapter.clear();
+                for(String dayForecastStr : result){
+>>>>>>> master
                     arrayAdapter.add(dayForecastStr);
                 }
 

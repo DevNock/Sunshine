@@ -41,5 +41,5 @@
             android:authorities="com.google.sunshine.app"
             android:name=".data.WeatherProvider"/>
     </application>
-    
+
 </manifest>
